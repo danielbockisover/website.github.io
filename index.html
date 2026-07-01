@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>daniel bock is over.</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Pixel&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #fff;
+            --text: #000;
+            --hover-bg: #000;
+            --hover-text: #fff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Geist Pixel', sans-serif;
+            color: var(--text);
+            background-color: var(--bg);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* LAYOUT MODIFICATIONS */
+
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+            width: 100%;
+
+            /* Pushing the header down */
+            margin-top: 15vh;
+
+            /* Added 50px padding to shift everything left */
+            padding-left: 50px;
+        }
+
+        .name {
+            font-size: 5rem;
+            margin-bottom: 60px;
+            line-height: 0.9;
+        }
+
+        /* The Navigation List */
+        .nav-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-left: 0; /* Inherit parent padding, no need to add again */
+            margin-left: 0;
+        }
+
+        /* The Trigger Buttons */
+        .nav-item {
+            font-size: 2rem;
+            text-transform: lowercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            padding: 5px 0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        /* HOVER EFFECTS (CSS Only) */
+
+        /* Main Hover: Black Background, White Text, Shift Left */
+        .nav-item:hover {
+            background-color: var(--hover-bg);
+            color: var(--hover-text);
+            padding-left: 20px;
+        }
+
+        /* Submenu Styling (Initially Hidden) */
+        .submenu {
+            display: none;
+            list-style: none;
+            margin-top: 0;
+            width: max-content;
+
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Class to show the submenu */
+        .submenu.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .submenu li {
+            border-bottom: 1px solid #333;
+            margin-bottom: 5px;
+        }
+
+        .submenu a {
+            display: block;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: background-color 0.2s, padding-left 0.2s;
+            /* Ensure text starts at the very left edge relative to the 50px parent padding */
+            padding-left: 0;
+        }
+
+        /* Submenu Hover Effect */
+        .submenu a:hover {
+            background-color: var(--hover-bg);
+            color: var(--hover-text);
+            padding-left: 10px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            padding: 40px;
+            font-size: 0.8rem;
+            text-transform: lowercase;
+
+            /* Added 50px padding to match header alignment */
+            padding-left: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1 class="name">daniel bock is over.</h1>
+
+        <nav class="nav-list">
+
+            <!-- MUSIC LINK -->
+            <div id="music-wrapper" onmouseenter="openMenu('music-menu')" onmouseleave="closeMenus()">
+                <span class="nav-item" onclick="toggleMenu(event, 'music-menu')">music</span>
+
+                <ul id="music-menu" class="submenu">
+                    <li><a href="https://danielbock.bandcamp.com/" target="_blank">Bandcamp</a></li>
+                    <li><a href="https://music.apple.com/us/artist/daniel-bock/984913475" target="_blank">Apple Music</a></li>
+                </ul>
+            </div>
+
+            <!-- BOOKS LINK -->
+            <div id="books-wrapper" onmouseenter="openMenu('books-menu')" onmouseleave="closeMenus()">
+                <span class="nav-item" onclick="toggleMenu(event, 'books-menu')">books</span>
+
+                <ul id="books-menu" class="submenu">
+                    <li><a href="https://www.goodreads.com/author/show/19985030.Daniel_Bock" target="_blank">Goodreads</a></li>
+                    <li><a href="https://www.amazon.de/stores/author/B08JXTQQV5/allbooks" target="_blank">Amazon</a></li>
+                </ul>
+            </div>
+
+            <!-- GAMES LINK -->
+            <div id="games-wrapper" onmouseenter="openMenu('games-menu')" onmouseleave="closeMenus()">
+                <span class="nav-item" onclick="toggleMenu(event, 'games-menu')">games</span>
+
+                <ul id="games-menu" class="submenu">
+                    <li><a href="https://store.steampowered.com/app/3855760/SERPENT_AT_THE_VERNISSAGE/" target="_blank">Steam</a></li>
+                    <li><a href="https://danielbock.itch.io/" target="_blank">Itch.io</a></li>
+                </ul>
+            </div>
+
+        </nav>
+    </div>
+
+    <!-- Footer: Kept ©, Removed 2023, Added dot after daniel bock -->
+    <footer>&copy; daniel bock. // all rights reserved.</footer>
+
+    <script>
+        function toggleMenu(e, menuId) {
+            if(e.target.tagName === 'SPAN') {
+                e.preventDefault();
+
+                const menu = document.getElementById(menuId);
+                closeMenus();
+
+                if (!menu.classList.contains('active')) {
+                    menu.classList.add('active');
+                } else {
+                    menu.classList.remove('active');
+                }
+            }
+        }
+
+        function openMenu(id) {
+            const menu = document.getElementById(id);
+            if (!menu.classList.contains('active')) {
+                menu.classList.add('active');
+            }
+        }
+
+        function closeMenus() {
+            const menus = document.querySelectorAll('.submenu');
+            menus.forEach(m => m.classList.remove('active'));
+        }
+    </script>
+
+</body>
+</html>
